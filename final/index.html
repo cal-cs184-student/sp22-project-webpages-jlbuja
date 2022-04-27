@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>cs184 ~ Final Project</title>
+        <link rel="icon" type="image/x-icon" href="assets/meshIcon.png" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+            <div class="container px-4">
+                <a class="navbar-brand" href="#page-top">CS 184 Final Project ~ Dispersive Rave Tracing</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="#about">About Project</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#progressReport">Progress Report</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#schedule">Updated Schedule</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+      
+      
+        <!-- About Section -->
+        <section id="about">
+            <div class="container px-4">
+                <div class="row gx-4 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2>About the project</h2>
+                        <p class="lead">Team Members: Nick Drian, Ruby Werman, Jen Buja and Jake Martin</p>
+                        <p class="lead"><a href="https://docs.google.com/presentation/d/1ppbCP8VzxPDlNkD1VFaZfWnUXCRaPuzUDFRlFnLxym0/edit?usp=sharing">Presentation Slides</a></p>
+                        <p class="lead"><a href="https://drive.google.com/file/d/125NfIrVd19bktx9tX9PK8n2eVC7AiBco/view?usp=sharing">Milestone Video</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Part 1 -->
+        <section class="bg-light" id="progressReport">
+            <div class="container px-4">
+                <div class="row gx-4 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2>Summary of Progress and Reflection</h2>
+                        <p class="lead">We built custom .dae files to test refraction and dispersion code we will write. We rendered the .dae file initially on blender and then figured out how to render the .dae file in our project 3 C++ code. Our main .dae file we will be testing with is a glass triangular prism inside a cornell box, which is shown below. Shown below are other custom .dae files we made and blender renders we made.</p>
+                        <p>CBPrism.dae</p>
+                        <image src="assets/image6.png"></image>
+                        <p>CBPrism_angle.dae- prism on 25 degree angle</p>
+                        <image src="assets/image2.png"></image>
+                        <p>CBPrism.blend– rendered in blender using Cycles Render</p>
+                        <image src="assets/image7.png"></image>
+                        <p>CBDiamond.blend– rendered in blender using Cycles Render</p>
+                        <image src="assets/image3.png"></image>
+                        <p class="lead">We also worked on building a HSL to RGB color converter. We did this by developing color utility functions needed for dispersion such as HSLtoRGB(), RGBtoHSL(), and getWaveLength(). The code is shown below.</p>
+                        <image src="assets/image1.png"></image>
+                        <image src="assets/image4.png"></image>
+                        <image src="assets/image5.png"></image>
+                        <image src="assets/image8.png"></image>
+                        <p class="lead">We also worked on getting functioning photon mapping software that we will use to create a dispersion effect. The source code of the photon mapping software can be found <a href="https://github.com/linusmossberg/monte-carlo-ray-tracer">here</a>.</p>
+                        <p class="lead">Right now, we are on track to finish by the final deadline. Once the open source photon mapping software is up and running, we will be able to integrate the software and color conversion code into our project 3 code to test it out on our custom .dae files to show off our implemented dispersion.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part 2 -->
+        <section class="bg-light" id="schedule">
+            <div class="container px-4">
+                <div class="row gx-4 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2>Updated Schedule</h2>
+                        <p class="lead">Week 3: 
+                            <ul>
+                                <li>Get open source photon mapping working.</li>
+                                <li>Get dispersion working on our project 3 path tracer.</li>
+                                <li>Finish up example .dae files.</li>
+                            </ul>
+                        </p>
+                        <p class="lead">Week 4: 
+                            <ul>
+                                <li>Implement dispersion in photon mapping framework.</li>
+                                <li>Polish off color space conversion to implement dispersion.</li>
+                            </ul>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
