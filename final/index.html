@@ -86,7 +86,7 @@
                                 <ul>
                                     <li><b>Sampling the wavelength: </b>Wavelength is sampled uniformly between 380 and 700nm.</li>
                                     <li><b>Changing the IOR: </b> We used a method pulled from the study "Prisms and Rainbows: a Dispersion Model for Computer Graphics" by F. Kenton Musgrave at Yale University. The method defines the new IOR of the material by multiplying a normalized frequency (Between 0 and 1) by a constant which is calculated using the formula below. This change in ior was successful in producing realistic looking color dispersion.</li>
-                                        <image src="assets/finalAssets/image1.png"></image>
+                                        <image style="width:90%" src="assets/finalAssets/image1.png"></image>
                                     <li><b>Visible light spectrum buckets:</b> Function is defined with a series of "if" statements that define the wavelength ranges for each color. It gives a discretized range of color values.</li>
                                     <li><b>RGB to HSL conversion: </b> We implemented utility functions for extracting wavelength and intensity information from RGB space. We found RGB to HSL conversion to be very helpful because HSL is much easier to map to wavelength than RGB.</li>
                                     <li><b>Color gradient interpolation: </b> We implemented a function that can take in a list containing RGB values of any length and a wavelength. The function assumes that the RGB values in the list are distributed evenly across the range of wavelengths being sampled (380 - 700nm) and calculates the color of a wavelength by interpolating between the colors of the two nearest evenly distributed RGB values.</li>
@@ -108,10 +108,10 @@
                             <p class="lead">
                                 <ul>
                                     <li><b>Triangle winding order:</b> The photon mapping program that we used set the normal of a surface according to the winding order of the triangle. This affects the light objects and also refractive objects which at specific angles will reflect one winding order of triangle and refract the other. This made it time consuming to make simple objects as some blender objects opt to use different winding orders like the triangular prism below. It also restricted the number of complex meshes we could import as not all have a uniform winding order.</li>
-                                    <image src="assets/finalAssets/image8.png"></image>
+                                    <image style="width:90%" src="assets/finalAssets/image8.png"></image>
                                     <li><b>Point Lights:</b> Point lights are great for rendering well lighted scenes, but are not good at making dispersive effects. The below image is the first rainbow that the program produced. Due to the low intensity of a point light the rainbow is very faint. Our first attempt to resolve this problem involved putting the light at the end of a tube which was given a mirror BSDF. This was able to produce a more vibrant spectrum but did not work quite as well as we had hoped. After this our next approach was to implement a laser within the photon mapping program directly.</li>
-                                    <image src="assets/finalAssets/image11.png"></image>
-                                    <image src="assets/finalAssets/image4.png"></image>
+                                    <image style="width:90%" src="assets/finalAssets/image11.png"></image>
+                                    <image style="width:90%" src="assets/finalAssets/image4.png"></image>
                                     <li><b>Transition to Photon Mapping:</b> We initially intended to add to the 3-2 code to implement dispersion, but soon realized that it was too noisy. We needed to figure out an alternative method to implement dispersive effects without using ray tracing. We decided to try photon mapping using open source software in order to make physically accurate renders, and it worked!</li>
                                     <li><b>Compiling Code:</b> When using the library, we at first had trouble with compiling the code. To resolve this, we checked out to a previous commit of the repository.</li>
                                     <li><b>Developing a technical approach for implementing dispersion based on our knowledge of physics:</b> We closed our gaps in our physics knowledge to create an implementation by reading research papers and pulling a method to determine a change in the index of refraction according to the frequency.</li>
@@ -131,14 +131,14 @@
                     <div class="col-lg-8">
                         <h2>Results</h2>
                         <p class="lead">American Eagle with Red to White to Blue Dispersion Spectra (laser being pointed at the eagle):</p>
-                        <img src="assets/finalAssets/image10.png" alt="">
+                        <img style="width:90%" src="assets/finalAssets/image10.png" alt="">
                         <p class="lead">Comparisons of Different Color Spectra Implemented:</p>
-                        <img src="assets/finalAssets/image2.png" alt="">
-                        <img src="assets/finalAssets/image9.jpg" alt="">
-                        <img src="assets/finalAssets/image5.png" alt="">
-                        <img src="assets/finalAssets/image6.png" alt="">
-                        <img src="assets/finalAssets/image7.png" alt="">
-                        <img src="assets/finalAssets/image3.png" alt="">
+                        <img style="width:90%" src="assets/finalAssets/image2.png" alt="">
+                        <img style="width:90%" src="assets/finalAssets/image9.jpg" alt="">
+                        <img style="width:90%" src="assets/finalAssets/image5.png" alt="">
+                        <img style="width:90%" src="assets/finalAssets/image6.png" alt="">
+                        <img style="width:90%" src="assets/finalAssets/image7.png" alt="">
+                        <img style="width:90%" src="assets/finalAssets/image3.png" alt="">
                     </div>
                 </div>
             </div>
