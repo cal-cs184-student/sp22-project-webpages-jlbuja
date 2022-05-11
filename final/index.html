@@ -18,9 +18,12 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="#about">About Project</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#progressReport">Progress Report</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#schedule">Updated Schedule</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#abstract">Abstract</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#approach">Approach</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#results">Results</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#references">References</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contributions">Contributions</a></li>
                     </ul>
                 </div>
             </div>
@@ -40,13 +43,14 @@
                 </div>
             </div>
         </section>
-        <!-- Part 1 -->
-        <section class="bg-light" id="progressReport">
+        <!-- Abstract -->
+        <section class="bg-light" id="abstract">
             <div class="container px-4">
                 <div class="row gx-4 justify-content-center">
                     <div class="col-lg-8">
-                        <h2>Summary of Progress and Reflection</h2>
-                        <p class="lead">We built custom .dae files to test refraction and dispersion code we will write. We rendered the .dae file initially on blender and then figured out how to render the .dae file in our project 3 C++ code. Our main .dae file we will be testing with is a glass triangular prism inside a cornell box, which is shown below. Shown below are other custom .dae files we made and blender renders we made.</p>
+                        <h2>Abstract</h2>
+                        <p class="lead">We implemented dispersion using photon mapping. We altered and added to an open source program that implements photon mapping in order to render custom scenes created in Blender. We began by modifying the photon mapping software to implement our dispersive BDSF. We accomplished this by sampling the wavelength of photons, normalizing the index of refraction, and changed the transmittance of materials to perform color gradient interpolation. We designed custom Cornell box scenes using Blender and integrated them into the software to display our dispersive BDSF. We created light objects within our scenes by creating objects within the software and assigning them to have a light material. Using this method, we created laser light objects to create a directed beam of white light onto the dispersive objects. Once completing integration, we created visually interesting scenes shown in our final results.                         </p>
+                        <!-- <p class="lead">We built custom .dae files to test refraction and dispersion code we will write. We rendered the .dae file initially on blender and then figured out how to render the .dae file in our project 3 C++ code. Our main .dae file we will be testing with is a glass triangular prism inside a cornell box, which is shown below. Shown below are other custom .dae files we made and blender renders we made.</p>
                         <p>CBPrism.dae</p>
                         <image src="assets/image6.png"></image>
                         <p>CBPrism_angle.dae- prism on 25 degree angle</p>
@@ -61,32 +65,118 @@
                         <image src="assets/image5.png"></image>
                         <image src="assets/image8.png"></image>
                         <p class="lead">We also worked on getting functioning photon mapping software that we will use to create a dispersion effect. The source code of the photon mapping software can be found <a href="https://github.com/linusmossberg/monte-carlo-ray-tracer">here</a>.</p>
-                        <p class="lead">Right now, we are on track to finish by the final deadline. Once the open source photon mapping software is up and running, we will be able to integrate the software and color conversion code into our project 3 code to test it out on our custom .dae files to show off our implemented dispersion.</p>
+                        <p class="lead">Right now, we are on track to finish by the final deadline. Once the open source photon mapping software is up and running, we will be able to integrate the software and color conversion code into our project 3 code to test it out on our custom .dae files to show off our implemented dispersion.</p> -->
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Part 2 -->
-        <section class="bg-light" id="schedule">
+        <!-- Technical Approach -->
+        <section class="bg-light" id="approach">
             <div class="container px-4">
                 <div class="row gx-4 justify-content-center">
                     <div class="col-lg-8">
-                        <h2>Updated Schedule</h2>
-                        <p class="lead">Week 3: 
-                            <ul>
-                                <li>Get open source photon mapping working.</li>
-                                <li>Get dispersion working on our project 3 path tracer.</li>
-                                <li>Finish up example .dae files.</li>
-                            </ul>
-                        </p>
-                        <p class="lead">Week 4: 
-                            <ul>
-                                <li>Implement dispersion in photon mapping framework.</li>
-                                <li>Polish off color space conversion to implement dispersion.</li>
-                            </ul>
-                        </p>
+                        <h2>Technical Approach</h2>
+                            <h4>Photon Mapping Library</h4>
+                            <p class="lead">We found and modified a photon mapping library found on github. This library was already capable of producing high quality caustics which is ideal for the purposes of simulating dispersion.
+                                The latest version of the library required a more recent C++ compiler than anyone in the group was able to install so we had to checkout a previous commit which was able to be successfully built on our PCs.</p>    
+                            <h4>Creation of Dispersive BSDF</h4>
+                            <p class="lead">The Dispersive BSDF we created in the photon mapping library differed from the preexisting refractive BSDF in two ways. It samples a wavelength uniformly between 380 - 700nm and recalculates the ior and the transmittance of the material based on this wavelength.
+                                The BSDF can be enabled in the program by giving a refractive material a "isDifractive" property and setting it to true. A "difractivity" property also has to be given to the material and it needs to be assigned a double (0.5 works well).
+                                <ul>
+                                    <li><b>Sampling the wavelength: </b>Wavelength is sampled uniformly between 380 and 700nm.</li>
+                                    <li><b>Changing the IOR: </b> We used a method pulled from the study "Prisms and Rainbows: a Dispersion Model for Computer Graphics" by F. Kenton Musgrave at Yale University. The method defines the new IOR of the material by multiplying a normalized frequency (Between 0 and 1) by a constant which is calculated using the formula below. This change in ior was successful in producing realistic looking color dispersion.</li>
+                                        <image src="assets/finalAssets/image1.png"></image>
+                                    <li><b>Visible light spectrum buckets:</b> Function is defined with a series of "if" statements that define the wavelength ranges for each color. It gives a discretized range of color values.</li>
+                                    <li><b>RGB to HSL conversion: </b> We implemented utility functions for extracting wavelength and intensity information from RGB space. We found RGB to HSL conversion to be very helpful because HSL is much easier to map to wavelength than RGB.</li>
+                                    <li><b>Color gradient interpolation: </b> We implemented a function that can take in a list containing RGB values of any length and a wavelength. The function assumes that the RGB values in the list are distributed evenly across the range of wavelengths being sampled (380 - 700nm) and calculates the color of a wavelength by interpolating between the colors of the two nearest evenly distributed RGB values.</li>
 
+                                </ul>
+                            </p>
+                            <h4>JSON + OBJ + Blender Integration</h4>
+                            <p class="lead">The Monte Carlo Raytracer Library uses a scene file format defined using JSON. The JSON file contains information about the photon map, bvh, camera, surfaces, materials, and vertices. In order to render different objects, we used a combination of OBJ files and simple shapes that are defined by vertices. We modified the diffractive element of our scenes by adding two new attributes: `isDifractive` and `difractivity.`
+
+                                We used Blender to create models and then exported them as OBJ files. We then are able to read the OBJ files in our JSON file. 
+                                
+                                Our original approach was to use DAE files with the 3-2 pathtracer code. We used the DAE file of the Cornell Box as a starting point and then created new shapes inside the box. To get more complex shapes, we followed some blender tutorials and also utilized open source models from Sketchfab. Next, we switched to OBJ files. We were able to reuse the Cornell Box obj files and then swap out new OBJ files for the center object during testing and image creation.
+                            </p>
+                            <h4>Creation of Laser Objects</h4>
+                            <p class="lead">Enabled support within the photon mapping library for a new light type which is a perfect laser. It is enabled by giving a light in the program a "isLaser" property and setting it to true. Along with this, the laser direction and its Red, Green and Blue intensities need to be defined in the Light object within the JSON scene. 
+                                Lasers can be set to different colors, unrealistically high intensities and the rays are perfectly parallel meaning the laser doesn't lose intensity due to the inverse square law.
+                            </p>
+                            <h4>Challenges</h4>
+                            <p class="lead">
+                                <ul>
+                                    <li><b>Triangle winding order:</b> The photon mapping program that we used set the normal of a surface according to the winding order of the triangle. This affects the light objects and also refractive objects which at specific angles will reflect one winding order of triangle and refract the other. This made it time consuming to make simple objects as some blender objects opt to use different winding orders like the triangular prism below. It also restricted the number of complex meshes we could import as not all have a uniform winding order.</li>
+                                    <image src="assets/finalAssets/image8.png"></image>
+                                    <li><b>Point Lights:</b> Point lights are great for rendering well lighted scenes, but are not good at making dispersive effects. The below image is the first rainbow that the program produced. Due to the low intensity of a point light the rainbow is very faint. Our first attempt to resolve this problem involved putting the light at the end of a tube which was given a mirror BSDF. This was able to produce a more vibrant spectrum but did not work quite as well as we had hoped. After this our next approach was to implement a laser within the photon mapping program directly.</li>
+                                    <image src="assets/finalAssets/image11.png"></image>
+                                    <image src="assets/finalAssets/image4.png"></image>
+                                    <li><b>Transition to Photon Mapping:</b> We initially intended to add to the 3-2 code to implement dispersion, but soon realized that it was too noisy. We needed to figure out an alternative method to implement dispersive effects without using ray tracing. We decided to try photon mapping using open source software in order to make physically accurate renders, and it worked!</li>
+                                    <li><b>Compiling Code:</b> When using the library, we at first had trouble with compiling the code. To resolve this, we checked out to a previous commit of the repository.</li>
+                                    <li><b>Developing a technical approach for implementing dispersion based on our knowledge of physics:</b> We closed our gaps in our physics knowledge to create an implementation by reading research papers and pulling a method to determine a change in the index of refraction according to the frequency.</li>
+                                </ul>
+                            </p>
+                            <h4>Lessons Learned</h4>
+                            <p class="lead">The biggest lesson we learned from our final project is how to work on a team developing a project. Coding in teams has had its challenges. From managing a joint repository to trying to make our code legible to our partners, we gained a lot of experience collaborating on code. It was great to be able to divide and conquer to get tasks done in parallel, but it was even more useful to discuss our ideas together and work through difficult problems. We also learned a lot about reading a new code base and implementing code that is compatible with existing code. We realized that we needed to move from using dae files to using obj files integrated into a json file. Without developing our skills reading code bases, this would not have been possible. When creating these custom objects, we also learned how to use CAD software, which most of us had never used before.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results -->
+        <section class="bg-light" id="results">
+            <div class="container px-4">
+                <div class="row gx-4 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2>Results</h2>
+                        <p class="lead">American Eagle with Red to White to Blue Dispersion Spectra (laser being pointed at the eagle):</p>
+                        <img src="assets/finalAssets/image10.png" alt="">
+                        <p class="lead">Comparisons of Different Color Spectra Implemented:</p>
+                        <img src="assets/finalAssets/image2.png" alt="">
+                        <img src="assets/finalAssets/image9.jpg" alt="">
+                        <img src="assets/finalAssets/image5.png" alt="">
+                        <img src="assets/finalAssets/image6.png" alt="">
+                        <img src="assets/finalAssets/image7.png" alt="">
+                        <img src="assets/finalAssets/image3.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- References -->
+        <section class="bg-light" id="references">
+            <div class="container px-4">
+                <div class="row gx-4 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2>References</h2>
+                        <p class="lead"><a href="http://graphicsinterface.org/wp-content/uploads/gi1989-30.pdf ">Paper on Prisms, Rainbows, and Rendering Light Dispersion</a></p>
+                        <p class="lead"><a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.25.1889&rep=rep1&type=pdf">Paper on Rendering Light Dispersion Using a Composite Spectral Model</a></p>
+                        <p class="lead"><a href="https://graphicsinterface.org/wp-content/uploads/gi1999-7.pdfhttps://graphicsinterface.org/wp-content/uploads/gi1999-7.pdf">Dispersion Using Monte Carlo Rendering</a></p>
+                        <p class="lead"><a href="https://github.com/linusmossberg/monte-carlo-ray-tracer">Monte Carlo Ray Tracing GitHub Repository</a></p>
+                        <p class="lead"><a href="https://www.cs.princeton.edu/courses/archive/fall16/cos526/lectures/03-photonmapping.pdf">Princeton Photon Mapping Slides</a></p>
+                        <h4>Object References</h4>
+                        <p class="lead">"Wine Glass" (https://skfb.ly/6WVSC) by cleisonrodrigues is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).</p>
+                        <p class="lead">"Eurosvet 10080/6" (https://skfb.ly/oqx9R) by Lustron.ru is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).</p>
+                        <p class="lead">"Glass carafe, flagon with cork" (https://skfb.ly/6S7tE) by SusanKing is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).</p>
+                        <p class="lead">"Disco Ball" (https://skfb.ly/NyAH) by araghon007 is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).</p>
+                        <p class="lead">"Day 23 - Wild Eagle" (https://skfb.ly/6QTWL) by Ida Faber is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).</p>
+                        <p class="lead">"Air Balloons" (https://skfb.ly/ontOs) by leha_pu is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Member Contributions -->
+        <section class="bg-light" id="contributions">
+            <div class="container px-4">
+                <div class="row gx-4 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2>Member Contributions</h2>
+                        <p class="lead"><b>Jake:</b> Found the photon mapping library and got it ready to be modified for dispersion. Contributed to brainstorming how to implement the feature. Implemented change in IOR function, color bucketing function and helped implement color gradient interpolation function. Added support for JSON entries in the C++ photon mapping library. Implemented lasers in the photon mapping program. Put together the American eagle photo and the Dark Side of The Moon album cover remake.</p>
+                        <p class="lead"><b>Ruby:</b> I worked on building models for the scenes using the photon mapping library and Blender. I started by getting the 3-2 .dae files to render with our new photon mapping library. Then, I built new models using open-source models from Sketchfab and Blender. I then worked on making our 3D models compatible with the photon mapping code by adding to the JSON files. I also worked with Jake to improve the color bucketing function by adding interpolation. </p>
+                        <p class="lead"><b>Jen:</b> I helped Ruby with building the models for the Cornell box scenes. I worked on building the first version of the prism scene and built the chandelier scene using open source models. I worked on getting different kinds of lights in each scene. I figured out how to create light objects and diffuse objects within the photon mapping software without building the object in Blender. I helped gather and manage the materials for deliverables, polished the final presentation deck, and recorded the midpoint and final deliverable video.</p>
+                        <p class="lead"><b>Nick:</b> I began by researching the conversion from RGB space to Frequency space and creating the utility functions for that. I then helped brainstorm about the implementation of dispersion within the opensource photon mapping project that we used. Lastly, I designed some kaleidoscope-like meshes in Rhino7 and linked them into our virtual scene in order to produce some nice renderings that demonstrate the beauty of dispersion. </p>
                     </div>
                 </div>
             </div>
